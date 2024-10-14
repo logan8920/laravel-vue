@@ -2,14 +2,13 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ItemController;
+use App\Http\Controllers\{ItemController,EmailValidator};
 
-/*Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');*/
+// Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
-Route::get("/login",[AuthController::class,"index"])->name("login");
+Route::apiResource("item",ItemController::class)->middleware('auth:sanctum');
 
-Route::get("/register",[AuthController::class,"store"])->name("register");
 
-Route::apiResource("item",ItemController::class);
+require __DIR__.'/auth.php';

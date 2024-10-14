@@ -6,7 +6,8 @@
 
 import './bootstrap';
 import { createApp } from 'vue';
-import router from './router'
+import router from './router';
+
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -17,6 +18,7 @@ import router from './router'
 import DefaultComponent from './components/DefaultComponent.vue';
 const app = createApp(DefaultComponent);
 
+//app.component('vue-recaptcha', VueRecaptcha);
 //app.component('example-component', ExampleComponent);
 
 /**

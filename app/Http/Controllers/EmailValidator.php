@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Http\Requests\ValidateFormRequest;
 
-class AuthController extends Controller
+class EmailValidator extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(ValidateFormRequest $request)
     {
-        //
+        dd($request->all());
+        //$request->validate();
+        
     }
 
     /**

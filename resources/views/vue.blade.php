@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{csrf_token()}}">
      <!-- ===============================================--><!--    Document Title--><!-- ===============================================-->
 		<title>{{env("APP_NAME") ?? "Laravel View"}}</title>
 		<!-- ===============================================--><!--    Favicons--><!-- ===============================================-->
@@ -25,6 +26,27 @@
     <link href="{{ asset('assets/css/user-rtl.min.css') }}" rel="stylesheet" id="user-style-rtl">
     <link href="{{ asset('assets/css/user.min.css') }}" rel="stylesheet" id="user-style-default">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+    <link rel="stylesheet" href="{{asset('assets/css/toastr.min.css')}}"/>
+    <style>
+      iframe html body div#rc-anchor-container {
+          width: 361px !important;
+      }
+
+      label.error {
+            color: red !important;
+            font-size: 12px !important;
+            font-weight: bolder !important;
+      }
+      input.error:focus {
+            border: 1px solid red !important;
+            box-shadow: none !important;
+        }
+      input.error,select.error,textarea.error{
+        border: 1px solid red !important;
+        box-shadow: none !important;
+
+      }
+    </style>
 		@vite("resources/css/app.css")
 </head>
 <body>
@@ -37,8 +59,17 @@
   <script src="{{ asset('vendors/countup/countUp.umd.js') }}"></script>
   <script src="{{ asset('vendors/swiper/swiper-bundle.min.js') }}"></script>
   <script src="{{ asset('vendors/lodash/lodash.min.js') }}"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="{{ asset('assets/js/toastr.min.js') }}"></script>
+  <script src="{{asset('assets/js/jquery.validate.min.js')}}"></script>
+  <script src="{{asset('assets/js/additional-methods.min.js')}}"></script>
+  <script src="{{ asset('assets/js/form.js') }}"></script>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
   <script src="{{ asset('assets/js/theme.js') }}"></script>
+  <script>
+    const baseUrl = "{{request()->root()}}";
+  </script>
 	@vite("resources/js/app.js")
 </body>
 </html>
