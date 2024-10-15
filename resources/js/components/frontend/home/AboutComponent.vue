@@ -31,6 +31,7 @@
 		mounted() {
 			document.querySelector("nav").style.backgroundColor = 'rgb(49, 60, 89)';
 			document.querySelector("nav").classList.add("bg-black");
+			window.scrollTo(0, 0);
 		}
 	}
 </script>

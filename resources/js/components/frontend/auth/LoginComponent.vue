@@ -3,14 +3,14 @@
         <div class="hero-background justify-content-center">
             <div class="card p-4" style="max-width: 500px; width: 100%;">
                 <div class="text-center mb-0">
-                    <img src="/assets/img/logos/hyper_email_validator_logo-removebg-preview.png" alt="Logo"
+                    <img src="assets/img/logos/hyper_email_validator_logo-removebg-preview.png" alt="Logo"
                         class="img-fluid rounded-circle" style="width: 80px;">
                 </div>
 
                 <h4 class="text-center mb-2">Sign In</h4>
 
                 <div class="d-flex justify-content-center gap-1">
-                    <a href="#" class="btn btn-outline-primary btn-sm w-45"> <!-- w-45 to ensure even size buttons -->
+                    <a href="#" class="btn btn-outline-primary btn-sm w-100"> <!-- w-45 to ensure even size buttons -->
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                             aria-hidden="true" role="img" class="iconify iconify--logos MuiBox-root css-0 fs-8"
                             width="0.98em" height="1em" viewBox="0 0 256 262">
@@ -28,7 +28,7 @@
                             </path>
                         </svg>&nbsp;&nbsp; Google
                     </a>
-                    <a href="#" class="btn btn-outline-info btn-sm w-45">
+                    <a href="#" class="btn btn-outline-info btn-sm w-100">
                         <i class="uil uil-facebook fs-8"></i> Facebook
                     </a>
                 </div>
@@ -39,7 +39,7 @@
                     <hr class="flex-grow-1">
                 </div>
 
-                <form>
+                <form @submit.prevent="handler" id="login">
                     <div class="mb-2">
                         <label for="email" class="form-label">Email Address *</label>
                         <input type="email" class="form-control email-input" id="email" placeholder="mail@example.com">
@@ -63,9 +63,41 @@
                 </form>
 
                 <div class="text-center mt-2">
-                    <p>Don’t have an account? <a href="#" class="text-decoration-none">New Account</a></p>
+                    <p>Don’t have an account? <router-link :to="{name: 'frontend.signup'}" class="text-decoration-none">Sign up </router-link></p>
                 </div>
             </div>
         </div>
     </section>
 </template>
+<script>
+import router from "../../../router";
+
+export default {
+
+	mounted() {
+		document.querySelector("nav").classList.remove("bg-black");
+		$("#login").validate();
+        window.scrollTo(0, 0);
+	},
+    methods: {
+        handler: function(event) {
+            const form = event.target;
+            const btn = form.querySelector("button[type=submit]");
+            const btnTxt = btn.textContent;
+            try {
+                startLoadings(btn,"Please wait...");
+                this.$store.dispatch("login",this.form).then(res=>{
+                    console.log(res);
+                    if(res.success) {
+                        router.push({name:"user.dashboard"});
+                    }
+                    stopLoadings(btn,btnTxt);
+                })
+                
+            } catch (error) {
+                alert(error);
+            }
+        }
+    }
+}
+</script>

@@ -5,6 +5,8 @@ import SupportComponent from '../components/frontend/home/SupportComponent.vue';
 import PricingComponent from '../components/frontend/home/PricingComponent.vue';
 import ContactComponent from '../components/frontend/home/ContactComponent.vue';
 import LoginComponent from '../components/frontend/auth/LoginComponent.vue';
+import RegisterComponent from '../components/frontend/auth/RegisterComponent.vue';
+
 
 
 
@@ -38,6 +40,11 @@ const routes = [
         path: '/login',
         component: LoginComponent,
         name: "frontend.login"
+    },
+    {
+        path: '/register',
+        component: RegisterComponent,
+        name: "frontend.signup"
     },
 
 ];

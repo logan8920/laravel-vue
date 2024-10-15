@@ -29,3 +29,10 @@
         <div class="position-relative bottom-0 start-0 z-1"><img class="img-fluid w-100" src="assets/img/illustrations/Wave_3.svg" alt="" /></div>
     </section>
 </template>
+<script>
+export default {
+    mounted(){
+        window.scrollTo(0, 0);
+    }
+}
+</script>

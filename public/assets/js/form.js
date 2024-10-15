@@ -209,7 +209,7 @@ async function makeHttpRequest(url, method, data, headers=false) {
 			res = await fetch(url);
 		}
 	    
-	    if (!res.ok) {
+	    if (!res.ok && res.status === 500) {
 	        console.log(res);
 	        throw new Error(res.statusText);
 	    }

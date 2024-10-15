@@ -53,28 +53,84 @@
 								<p class="fs-8 mb-5 mb-lg-6 text-center lh-lg fw-normal"> Validate email instantly with
 									our cutting-edge free online email verification tool!</p>
 							</div>
-							<div class="col-10 col-lg-7">
-								<form method="POST" onsubmit="return false;" @submit.prevent="handleSubmit" id="public-single-email">
+							<div class="col-10 col-lg-7" v-if="success">
+								<h4 class="text-center">Response</h4>
+								<div class="card shadow-sm mt-2 mb-2 w-100">
+									<div class="card-header bg-info text-white">
+										<h5 class="mb-0 text-white">{{ responseData.email }}</h5>
+									</div>
+									<div class="card-body">
+										<div class="row mb-3">
+											<div class="col-md-5"><strong>Username:</strong></div>
+											<div class="col-md-7">{{ responseData.user_name }}</div>
+										</div>
+										<div class="row mb-3">
+											<div class="col-md-5"><strong>Status:</strong></div>
+											<div class="col-md-7"><span :class="{
+												'badge bg-success': responseData.status == 'valid',
+												'badge bg-danger': responseData.status == 'invalid'
+											}">{{ responseData.status }}</span></div>
+										</div>
+										<div class="row mb-3">
+											<div class="col-md-5"><strong>MX Record:</strong></div>
+											<div class="col-md-7">{{ responseData.mx_record }}</div>
+										</div>
+										<div class="row mb-3">
+											<div class="col-md-5"><strong>Free Domain:</strong></div>
+											<div class="col-md-7"><span class="badge bg-primary">{{
+												responseData.free_domain }}</span></div>
+										</div>
+									</div>
+								</div>
+
+								<table class="table table-striped d-none">
+									<tr>
+										<th>Username </th>
+										<td> {{ responseData.user_name }}</td>
+									</tr>
+									<tr>
+
+										<th>Status</th>
+										<td> {{ responseData.status }}</td>
+									</tr>
+									<tr>
+
+										<th>MX Record</th>
+										<td>{{ responseData.mx_record }}</td>
+									</tr>
+									<tr>
+										<th>Free Domain</th>
+										<td>{{ responseData.free_domain }}</td>
+									</tr>
+								</table>
+
+								<button class="btn btn-info btn-sm ms-md-1 mt-lg-0 order-md-1 ms-auto"
+									@click.prevent="handleBack"> Back <span class="uil uil-arrow-right"></span>
+								</button>
+
+							</div>
+							<div class="col-10 col-lg-7" v-else>
+								<form method="POST" onsubmit="return false;" @submit.prevent="handleSubmit"
+									id="public-single-email">
 									<div class="mb-2 w-100">
 										<input class="form-control email-input" id="email" type="email"
 											placeholder="Enter email" name="email" required="required" />
 									</div>
 
 									<div class="mb-2 w-100">
-										<vue-recaptcha ref="recaptcha" data-size="362px" data-theme="dark" :sitekey="siteKey"
-											style="width: 100%; max-width: 400px;"></vue-recaptcha>
+										<vue-recaptcha ref="recaptcha" data-size="362px" data-theme="dark"
+											:sitekey="siteKey" style="width: 100%; max-width: 400px;"></vue-recaptcha>
 									</div>
 									<div class="d-grid">
 										<button class="btn btn-lg btn-primary lh-xl mb-x1" type="submit"> Subscribe
 										</button>
 									</div>
 								</form>
-							</div>
-							<div class="col-10 col-lg-7">
 								<p class="text-center lh-lg mb-0">simply enter the email address in the box below, and
 									our advanced email validator will provide you with real-time email deliverability
 									results!.</p>
 							</div>
+
 						</div>
 					</div>
 				</div>
@@ -196,12 +252,14 @@ export default {
 		return {
 			siteKey: "6Lee1mAqAAAAAKfTiLKhMFKiSvD0oEovKzUAg2Gq", // Use your actual site key here
 			token: '',
+			success: false,
 		};
 	},
 	mounted() {
 		document.querySelector("nav").classList.remove("bg-black");
 		$("#public-single-email").validate();
-		
+		window.scrollTo(0, 0);
+
 	},
 	methods: {
 		scrollToSection(sectionId) {
@@ -211,21 +269,39 @@ export default {
 			}
 		},
 		async handleSubmit(event) {
-			
-			if(!$(event.target).valid()) return;
+
+			if (!$(event.target).valid()) return;
 			const form = event?.target;
 			const btn = $(form).find("button[type=submit]")[0];
 			const btnTxt = btn?.textContent;
 			const url = `${baseUrl}/verify-single-email`;
 			const data = new FormData(form);
-			startLoadings(btn,"Please wait...");
+			startLoadings(btn, "Please wait...");
 			try {
-				const res = await makeHttpRequest(url,"post",data,true);
+				const res = await makeHttpRequest(url, "post", data, true);
+				if (res?.errors) {
+					Object.keys(res.errors).forEach(message => {
+						res.errors[message].forEach(error => toastr.error(error))
+					});
+				}
+
+				if (res.success) {
+					this.responseData = res.response[0];  // Store the response data
+					this.success = true;
+					console.log(res.response);
+				} else {
+					console.log(res.response);
+				}
 				console.log(res);
 			} catch (error) {
 				console.log(error);
 			}
-			stopLoadings(btn,btnTxt);
+			stopLoadings(btn, btnTxt);
+		},
+		handleBack() {
+			this.success = false;
+			console.log($(document).find("#public-single-email"))
+			$(document).find("#public-single-email").validate();
 		}
 	}
 }
