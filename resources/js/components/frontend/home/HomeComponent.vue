@@ -83,27 +83,6 @@
 									</div>
 								</div>
 
-								<table class="table table-striped d-none">
-									<tr>
-										<th>Username </th>
-										<td> {{ responseData.user_name }}</td>
-									</tr>
-									<tr>
-
-										<th>Status</th>
-										<td> {{ responseData.status }}</td>
-									</tr>
-									<tr>
-
-										<th>MX Record</th>
-										<td>{{ responseData.mx_record }}</td>
-									</tr>
-									<tr>
-										<th>Free Domain</th>
-										<td>{{ responseData.free_domain }}</td>
-									</tr>
-								</table>
-
 								<button class="btn btn-info btn-sm ms-md-1 mt-lg-0 order-md-1 ms-auto"
 									@click.prevent="handleBack"> Back <span class="uil uil-arrow-right"></span>
 								</button>

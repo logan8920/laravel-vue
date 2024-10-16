@@ -51,7 +51,15 @@
 </head>
 <body>
 	<!-- ===============================================--><!--    Main Content--><!-- ===============================================-->
-	<div id="app"></div>
+	
+    @if($user ?? false)
+    <div id="app-login">
+      <authLoadingComponent></authLoadingComponent>
+    </div>
+    @else
+    <div id="app"></div>
+    @endif
+ 
   <!-- ===============================================--><!--    JavaScripts--><!-- ===============================================-->
   <script src="{{ asset('vendors/popper/popper.min.js') }}"></script>
   <script src="{{ asset('vendors/bootstrap/bootstrap.min.js') }}"></script>
@@ -69,6 +77,7 @@
   <script src="{{ asset('assets/js/theme.js') }}"></script>
   <script>
     const baseUrl = "{{request()->root()}}";
+    const callbackData = '{{base64_encode(json_encode(($user ?? false) ? ["success" => true,"token" => $user->createToken($user->email)->plainTextToken,"user"=>$user->toArray()] : []))}}';
   </script>
 	@vite("resources/js/app.js")
 </body>

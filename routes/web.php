@@ -15,12 +15,19 @@ Route::get('/', function () {
 });
 
 Route::get('auth/redirect/{provider}', function ($provider) {
+    // echo $provider; die;
     return Socialite::driver($provider)->redirect();
 });
 
 Route::get('auth/callback/{provider}', function ($provider) {
     $socialUser = Socialite::driver($provider)->stateless()->user();
+    $imageData = file_get_contents($socialUser->getAvatar());
 
+    
+    if ($imageData !== false) {
+        $base64Image = base64_encode($imageData);
+        $base64ImageWithPrefix = 'data:image/jpeg;base64,' . $base64Image;
+    }
     // Find or create a user in your database
     $user = User::updateOrCreate(
         ['email' => $socialUser->getEmail()],
@@ -28,16 +35,16 @@ Route::get('auth/callback/{provider}', function ($provider) {
             'name' => $socialUser->getName(),
             'provider' => $provider,
             'provider_id' => $socialUser->getId(),
-            'avatar' => $socialUser->getAvatar(),
+            'avatar' => $base64ImageWithPrefix ?? $socialUser->getAvatar(),
         ]
     );
 
     // Log in the user
     Auth::login($user);
-
-    return redirect('/home');  // Redirect to a home or dashboard page
+    $token = $user->createToken('API Token')->plainTextToken;
+    return redirect("/#/loading?token={$token}")->;
 });
 
-Route::post("verify-single-email",[EmailValidator::class,"index"])->middleware("guest")->name("verify.single.email");
+Route::post("verify-single-email", [EmailValidator::class, "index"])->middleware("guest")->name("verify.single.email");
 
 

@@ -10,7 +10,7 @@
                 <h4 class="text-center mb-2">Sign In</h4>
 
                 <div class="d-flex justify-content-center gap-1">
-                    <a href="#" class="btn btn-outline-primary btn-sm w-100"> <!-- w-45 to ensure even size buttons -->
+                    <a href="auth/redirect/google" class="btn btn-outline-primary btn-sm w-100"> <!-- w-45 to ensure even size buttons -->
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                             aria-hidden="true" role="img" class="iconify iconify--logos MuiBox-root css-0 fs-8"
                             width="0.98em" height="1em" viewBox="0 0 256 262">
@@ -28,7 +28,7 @@
                             </path>
                         </svg>&nbsp;&nbsp; Google
                     </a>
-                    <a href="#" class="btn btn-outline-info btn-sm w-100">
+                    <a href="auth/redirect/facebook" class="btn btn-outline-info btn-sm w-100">
                         <i class="uil uil-facebook fs-8"></i> Facebook
                     </a>
                 </div>
@@ -42,18 +42,18 @@
                 <form @submit.prevent="handler" id="login">
                     <div class="mb-2">
                         <label for="email" class="form-label">Email Address *</label>
-                        <input type="email" class="form-control email-input" id="email" placeholder="mail@example.com">
+                        <input type="email" class="form-control email-input" name="email" id="email" placeholder="mail@example.com" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="password" class="form-label">Password *</label>
-                        <input type="password" class="form-control email-input" id="password"
-                            placeholder="Min. 8 characters">
+                        <input type="password" class="form-control email-input" name="password" id="password"
+                            placeholder="Min. 8 characters" required>
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <input type="checkbox" name="remember" class="form-check-input" id="rememberMe">
                             <label for="rememberMe" class="form-check-label">Remember me</label>
                         </div>
                         <a href="#" class="text-decoration-none">Reset password?</a>
@@ -70,6 +70,7 @@
     </section>
 </template>
 <script>
+
 import router from "../../../router";
 
 export default {
@@ -84,18 +85,23 @@ export default {
             const form = event.target;
             const btn = form.querySelector("button[type=submit]");
             const btnTxt = btn.textContent;
+            this.$toaster.setPosition("toast-bottom-center");
+            
             try {
                 startLoadings(btn,"Please wait...");
-                this.$store.dispatch("login",this.form).then(res=>{
-                    console.log(res);
+                this.$store.dispatch("login",event.target).then(res=>{
                     if(res.success) {
                         router.push({name:"user.dashboard"});
                     }
                     stopLoadings(btn,btnTxt);
                 })
+                .catch(error => {
+                    this.$toaster.error(error?.response?.data?.errors || error?.response?.data?.message);
+                    stopLoadings(btn,btnTxt);
+                });
                 
             } catch (error) {
-                alert(error);
+                this.$toaster.error(error);
             }
         }
     }

@@ -6,6 +6,8 @@ import PricingComponent from '../components/frontend/home/PricingComponent.vue';
 import ContactComponent from '../components/frontend/home/ContactComponent.vue';
 import LoginComponent from '../components/frontend/auth/LoginComponent.vue';
 import RegisterComponent from '../components/frontend/auth/RegisterComponent.vue';
+import authLoadingComponent from '../components/frontend/auth/loadingComponent.vue';
+
 
 
 
@@ -45,6 +47,11 @@ const routes = [
         path: '/register',
         component: RegisterComponent,
         name: "frontend.signup"
+    },
+    {
+        path: '/loading',
+        component: authLoadingComponent,
+        name: "frontend.auth.loading"
     },
 
 ];
