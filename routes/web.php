@@ -42,7 +42,7 @@ Route::get('auth/callback/{provider}', function ($provider) {
     // Log in the user
     Auth::login($user);
     $token = $user->createToken('API Token')->plainTextToken;
-    return redirect("/#/loading?token={$token}")->;
+    return redirect("/#/loading?token={$token}")->with("user",$user);
 });
 
 Route::post("verify-single-email", [EmailValidator::class, "index"])->middleware("guest")->name("verify.single.email");

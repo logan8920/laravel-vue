@@ -2,9 +2,13 @@
 	<nav class="navbar navbar-expand-md fixed-top" id="navbar" data-navbar-soft-on-scroll="data-navbar-soft-on-scroll">
 	    <div class="container-fluid px-0">
 	        <router-link :to="{name: 'frontend.home'}"><img class="navbar-brand w-75 d-md-none" src="assets/img/logos/hyper_email_validator_logo-removebg-preview.png" alt="logo" /></router-link><router-link :to="{name: 'frontend.home'}" class="navbar-brand fw-bold d-none d-md-block" >Hyperemail.validator</router-link>
-			<router-link :to="{name: 'frontend.signup'}" class="btn btn-primary btn-sm ms-md-x1 mt-lg-0 order-md-1 ms-auto">Sign up </router-link>
-			<router-link :to="{name: 'frontend.login'}" class="btn btn-info btn-sm ms-md-1 mt-lg-0 order-md-1 ms-auto">Sign in </router-link>
-	        <button
+			
+			<router-link v-if="!loggedIn" :to="{name: 'frontend.signup'}" class="btn btn-primary btn-sm ms-md-x1 mt-lg-0 order-md-1 ms-auto">Sign up </router-link>
+			<router-link v-if="!loggedIn" :to="{name: 'frontend.login'}" class="btn btn-info btn-sm ms-md-1 mt-lg-0 order-md-1 ms-auto">Sign in </router-link>
+	        
+			<router-link v-if="loggedIn" :to="{name: 'user.dashboard'}" class="btn btn-primary btn-sm ms-md-x1 mt-lg-0 order-md-1 ms-auto">Dashboard </router-link>
+
+			<button
 	        class="navbar-toggler border-0 pe-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
 	            <div class="collapse navbar-collapse justify-content-md-end" id="navbar-content" data-navbar-collapse="data-navbar-collapse">
 	                <ul class="navbar-nav gap-md-2 gap-lg-3 pt-x1 pb-1 pt-md-0 pb-md-0" data-navbar-nav="data-navbar-nav">
@@ -30,6 +34,11 @@
 		mounted() {
 			document.querySelector("nav").style.backgroundColor = 'rgb(49, 60, 89)';
 			document.querySelector("nav").classList.add("bg-black");
+		},
+		data() {
+			return {
+				loggedIn: this.$store.getters.authStatus
+			}
 		}
 	}
 </script>

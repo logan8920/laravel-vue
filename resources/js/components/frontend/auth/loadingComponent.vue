@@ -8,7 +8,18 @@
 export default {
   name: "loadingComponent",
   mounted() {
-    console.log(callbackData)
+    try {
+      const authLoader = document.querySelector(".auth-loader")
+      const payload = JSON.parse(atob(callbackData));
+      this.$store.commit('authLogin', payload);
+      authLoader.textContent = "Redirecting...";
+      this.$router.push({ name: "user.dashboard" });
+    } catch (error) {
+      console.log(error);
+      this.$store.commit('authLogout');
+      authLoader.textContent = "Something went wrong login in again!";
+      this.$router.push({ name: "frontend.login" });
+    }
   }
 };
 </script>

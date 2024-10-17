@@ -7,6 +7,9 @@ import ContactComponent from '../components/frontend/home/ContactComponent.vue';
 import LoginComponent from '../components/frontend/auth/LoginComponent.vue';
 import RegisterComponent from '../components/frontend/auth/RegisterComponent.vue';
 import authLoadingComponent from '../components/frontend/auth/loadingComponent.vue';
+import DashboardComponent from '../components/user/DashboardComponent.vue';
+//import ExceptionComponent from '../components/exception/ExceptionComponent.vue';
+import store from "../store";
 
 
 
@@ -16,49 +19,119 @@ const routes = [
     {
         path: '/',
         component: HomeComponent,
-        name: "frontend.home"
+        name: "frontend.home",
+        meta: {
+            isFrontend: true,
+            auth: false,
+        },
     },
     {
         path: '/about',
         component: AboutComponent,
-        name: "frontend.about"
+        name: "frontend.about",
+        meta: {
+            isFrontend: true,
+            auth: false,
+        },
     },
     {
         path: '/support',
         component: SupportComponent,
-        name: "frontend.support"
+        name: "frontend.support",
+        meta: {
+            isFrontend: true,
+            auth: false,
+        },
     },
     {
         path: '/pricing',
         component: PricingComponent,
-        name: "frontend.pricing"
+        name: "frontend.pricing",
+        meta: {
+            isFrontend: true,
+            auth: false,
+        },
     },
     {
         path: '/contact',
         component: ContactComponent,
-        name: "frontend.contact"
+        name: "frontend.contact",
+        meta: {
+            isFrontend: true,
+            auth: false,
+        },
     },
     {
         path: '/login',
         component: LoginComponent,
-        name: "frontend.login"
+        name: "frontend.login",
+        meta: {
+            isFrontend: true,
+            auth: false,
+        },
     },
     {
         path: '/register',
         component: RegisterComponent,
-        name: "frontend.signup"
+        name: "frontend.signup",
+        meta: {
+            isFrontend: true,
+            auth: false,
+        },
     },
     {
         path: '/loading',
         component: authLoadingComponent,
-        name: "frontend.auth.loading"
+        name: "frontend.auth.loading",
+        meta: {
+            isFrontend: true,
+            auth: false,
+        },
     },
+    {
+        path: '/dashboard',
+        component: DashboardComponent,
+        name: "user.dashboard",
+        meta: {
+            isFrontend: false,
+            auth: true,
+        },
+    },
+    // {
+    //     path: "/exception",
+    //     name: "route.exception",
+    //     component: ExceptionComponent,
+    // },
 
 ];
 
 const router = createRouter({
     history: createWebHashHistory(),
     routes,
+});
+
+router.beforeEach((to, from, next) => {
+    if (to.meta.auth === true) {
+        if (!store.getters.authStatus) {
+            next({name: "auth.login"});
+        } else {
+            if (to.meta.isFrontend === false) {
+                if (to.meta.access === false) {
+                    // next({
+                    //     name: "route.exception",
+                    // });
+                } else {
+                    next();
+                }
+            } else {
+                next();
+            }
+        }
+    } else if ((to.name === "frontend.login" || to.name === "frontend.signup" || to.name === "frontend.forgotPassword" || to.name === "frontend.auth.loading") && store.getters.authStatus) {
+        next({name: "frontend.home"});
+    } else {
+        next();
+    }
 });
 
 export default router;
