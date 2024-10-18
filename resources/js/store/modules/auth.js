@@ -54,6 +54,16 @@ export const auth = {
                 });
             });
         },
+        register: function (context, payload) {
+            return new Promise((resolve, reject) => {
+                axios.post('api/register', payload).then((res) => {
+                    context.commit('authLogin', res.data);
+                    resolve(res);
+                }).catch((err) => {
+                    reject(err);
+                });
+            });
+        },
         authcheck: function (context, payload) {
             return new Promise((resolve, reject) => {
                 axios.post('auth/authcheck', payload).then((res) => {

@@ -6,7 +6,7 @@
 			<router-link v-if="!loggedIn" :to="{name: 'frontend.signup'}" class="btn btn-primary btn-sm ms-md-x1 mt-lg-0 order-md-1 ms-auto">Sign up </router-link>
 			<router-link v-if="!loggedIn" :to="{name: 'frontend.login'}" class="btn btn-info btn-sm ms-md-1 mt-lg-0 order-md-1 ms-auto">Sign in </router-link>
 	        
-			<router-link v-if="loggedIn" :to="{name: 'user.dashboard'}" class="btn btn-primary btn-sm ms-md-x1 mt-lg-0 order-md-1 ms-auto">Dashboard </router-link>
+			<router-link v-if="loggedIn" :to="{name:'user.dashboard'}" class="btn btn-primary btn-sm ms-md-x1 mt-lg-0 order-md-1 ms-auto">Dashboard </router-link>
 
 			<button
 	        class="navbar-toggler border-0 pe-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>

@@ -1,6 +1,6 @@
 <template>
     <section class="hero-section overflow-hidden position-relative z-0 mb-lg-0">
-        <div class="hero-background justify-content-center" style="min-height: 52rem;">
+        <div class="hero-background justify-content-center" style="min-height: 52rem;background-image:url(assets/img/illustrations/BG.webp);">
             <div class="container card p-4">
 
                 <div class="row justify-content-center">
@@ -46,24 +46,24 @@
                     </div>
                     <div class="col-sm-5 align-content-arounds p-4">
                         <h4 class="text-center mb-2">Sign up</h4>
-                        <form autocomplete="off">
+                        <form autocomplete="off" @submit.prevent="handler" id="registration">
 
                             <div class="mb-2">
                                 <label for="name" class="form-label">Name *</label>
                                 <input type="text" class="form-control email-input" id="name" name="name"
-                                    placeholder="Enter Name">
+                                    placeholder="Enter Name" required>
                             </div>
 
                             <div class="mb-2">
                                 <label for="email" class="form-label">Email Address *</label>
-                                <input type="email" class="form-control email-input" id="email"
-                                    placeholder="mail@example.com">
+                                <input type="email" class="form-control email-input" name="email" id="email"
+                                    placeholder="mail@example.com" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password *</label>
-                                <input type="password" class="form-control email-input" id="password"
-                                    placeholder="Min. 8 characters">
+                                <input type="password" class="form-control email-input" name="password" maxlength="8" id="password"
+                                    placeholder="Min. 8 characters" required>
                             </div>
 
 
@@ -82,14 +82,44 @@
     </section>
 </template>
 <script>
+import router from "../../../router";
 
 export default {
 
 	mounted() {
 		document.querySelector("nav").classList.remove("bg-black");
-		$("#public-single-email").validate();
+		$("#registration").validate();
         window.scrollTo(0, 0);
 
 	},
+    methods: {
+        handler: function(event) {
+            const form = event.target;
+            if(!$(form).valid()) return false;
+            const btn = form.querySelector("button[type=submit]");
+            const btnTxt = btn.textContent;
+            this.$toaster.setPosition("toast-bottom-center");
+            
+            try {
+                startLoadings(btn,"Please wait...");
+                this.$store.dispatch("register",event.target).then(res=>{
+                    console.log(res.data.success);
+                    if(res.data.success) {
+                        this.$toaster.success("registration Success");
+                        router.push({name:"user.dashboard"});
+                    }
+                    stopLoadings(btn,btnTxt);
+                })
+                .catch(error => {
+                    this.$toaster.error(error?.response?.data?.errors || error?.response?.data?.message);
+                    stopLoadings(btn,btnTxt);
+                });
+                
+            } catch (error) {
+                this.$toaster.error(error);
+                stopLoadings(btn,btnTxt);
+            }
+        }
+    }
 }
 </script>

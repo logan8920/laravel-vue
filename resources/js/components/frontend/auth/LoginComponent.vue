@@ -1,6 +1,6 @@
 <template>
     <section class="hero-section overflow-hidden position-relative z-0 mb-4 mb-lg-0">
-        <div class="hero-background justify-content-center">
+        <div class="hero-background justify-content-center" style="min-height: 52rem;background-image:url(assets/img/illustrations/BG.webp);">
             <div class="card p-4" style="max-width: 500px; width: 100%;">
                 <div class="text-center mb-0">
                     <img src="assets/img/logos/hyper_email_validator_logo-removebg-preview.png" alt="Logo"
@@ -83,6 +83,7 @@ export default {
     methods: {
         handler: function(event) {
             const form = event.target;
+            if(!$(form).valid()) return false;
             const btn = form.querySelector("button[type=submit]");
             const btnTxt = btn.textContent;
             this.$toaster.setPosition("toast-bottom-center");
@@ -102,6 +103,7 @@ export default {
                 
             } catch (error) {
                 this.$toaster.error(error);
+                stopLoadings(btn,btnTxt);
             }
         }
     }

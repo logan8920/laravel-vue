@@ -14,6 +14,7 @@ export default {
       this.$store.commit('authLogin', payload);
       authLoader.textContent = "Redirecting...";
       this.$router.push({ name: "user.dashboard" });
+      //window.location = 'user/#/dashboard';
     } catch (error) {
       console.log(error);
       this.$store.commit('authLogout');

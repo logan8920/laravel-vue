@@ -272,18 +272,18 @@ var detectorInit = function detectorInit() {
   var _window = window,
     is = _window.is;
   var html = document.querySelector('html');
-  is.opera() && addClass(html, 'opera');
-  is.mobile() && addClass(html, 'mobile');
-  is.firefox() && addClass(html, 'firefox');
-  is.safari() && addClass(html, 'safari');
-  is.ios() && addClass(html, 'ios');
-  is.iphone() && addClass(html, 'iphone');
-  is.ipad() && addClass(html, 'ipad');
-  is.ie() && addClass(html, 'ie');
-  is.edge() && addClass(html, 'edge');
-  is.chrome() && addClass(html, 'chrome');
-  is.mac() && addClass(html, 'osx');
-  is.windows() && addClass(html, 'windows');
+  is?.opera() && addClass(html, 'opera');
+  is?.mobile() && addClass(html, 'mobile');
+  is?.firefox() && addClass(html, 'firefox');
+  is?.safari() && addClass(html, 'safari');
+  is?.ios() && addClass(html, 'ios');
+  is?.iphone() && addClass(html, 'iphone');
+  is?.ipad() && addClass(html, 'ipad');
+  is?.ie() && addClass(html, 'ie');
+  is?.edge() && addClass(html, 'edge');
+  is?.chrome() && addClass(html, 'chrome');
+  is?.mac() && addClass(html, 'osx');
+  is?.windows() && addClass(html, 'windows');
   navigator.userAgent.match('CriOS') && addClass(html, 'chrome');
 };
 
@@ -423,7 +423,7 @@ var navbarInit = function navbarInit() {
     });
   }
   var navbarNav = document.querySelector('[data-navbar-nav]');
-  navbarNav.addEventListener('click', function (event) {
+  navbarNav && navbarNav.addEventListener('click', function (event) {
     if (event.target.closest('li')) {
       var navbarToggler = document.querySelector('[data-bs-toggle]');
       var navbarItemContainer = document.querySelector('[data-navbar-collapse]');

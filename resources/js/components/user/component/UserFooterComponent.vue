@@ -28,8 +28,8 @@
     </footer>
 </template>
 <script>
-export const FooterComponent = {
-    name: 'FooterComponent',
+export const UserFooterComponent = {
+    name: 'UserFooterComponent',
     // Other component properties
 };
 </script>

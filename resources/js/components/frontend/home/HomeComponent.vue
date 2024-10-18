@@ -1,7 +1,7 @@
 <template>
 	<div data-bs-target="#navbar" tabindex="0">
 		<section class="hero-section overflow-hidden position-relative z-0 mb-4 mb-lg-0" id="home">
-			<div class="hero-background" style="min-height: 49rem;">
+			<div class="hero-background" style="min-height: 49rem; background-image:url(assets/img/illustrations/BG.webp);">
 				<div class="container">
 					<div class="row gy-4 gy-md-8 pt-9 pt-lg-0">
 						<div class="col-lg-6 text-center text-lg-start">

@@ -111,10 +111,14 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    
     if (to.meta.auth === true) {
+        
         if (!store.getters.authStatus) {
-            next({name: "auth.login"});
+            console.log("nexthrere",to.meta.auth);
+            next({name: "frontend.login"});
         } else {
+            
             if (to.meta.isFrontend === false) {
                 if (to.meta.access === false) {
                     // next({
@@ -124,10 +128,12 @@ router.beforeEach((to, from, next) => {
                     next();
                 }
             } else {
+                
                 next();
             }
         }
     } else if ((to.name === "frontend.login" || to.name === "frontend.signup" || to.name === "frontend.forgotPassword" || to.name === "frontend.auth.loading") && store.getters.authStatus) {
+        console.log("hrere");
         next({name: "frontend.home"});
     } else {
         next();

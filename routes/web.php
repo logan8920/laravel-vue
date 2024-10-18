@@ -14,6 +14,10 @@ Route::get('/', function () {
     return view('vue');
 });
 
+Route::get('/user', function () {
+    return view('user-vue');
+});
+
 Route::get('auth/redirect/{provider}', function ($provider) {
     // echo $provider; die;
     return Socialite::driver($provider)->redirect();
