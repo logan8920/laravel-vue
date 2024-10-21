@@ -11,7 +11,7 @@
                         </div>
                         <h4 class="text-center mb-3">Social Media Signup</h4>
                         <div class="text-center">
-                            <a href="#" class="btn btn-outline-primary btn-sm w-75 mb-2">
+                            <a href="auth/redirect/google" class="btn btn-outline-primary btn-sm w-75 mb-2">
                                 <!-- w-45 to ensure even size buttons -->
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                     aria-hidden="true" role="img" class="iconify iconify--logos MuiBox-root css-0 fs-8"

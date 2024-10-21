@@ -238,6 +238,8 @@ export default {
 		document.querySelector("nav").classList.remove("bg-black");
 		$("#public-single-email").validate();
 		window.scrollTo(0, 0);
+		
+
 
 	},
 	methods: {
@@ -253,27 +255,28 @@ export default {
 			const form = event?.target;
 			const btn = $(form).find("button[type=submit]")[0];
 			const btnTxt = btn?.textContent;
-			const url = `${baseUrl}/verify-single-email`;
-			const data = new FormData(form);
 			startLoadings(btn, "Please wait...");
 			try {
-				const res = await makeHttpRequest(url, "post", data, true);
-				if (res?.errors) {
-					Object.keys(res.errors).forEach(message => {
+
+				const res = await this.$store.dispatch("singleEmailVerify",event.target);
+				console.log(res);
+				if (res?.data?.errors) {
+					Object.keys(res?.data?.errors).forEach(message => {
 						res.errors[message].forEach(error => toastr.error(error))
 					});
 				}
 
-				if (res.success) {
-					this.responseData = res.response[0];  // Store the response data
+				if (res?.data?.success) {
+					this.responseData = res?.data?.response[0] ?? [];  // Store the response data
 					this.success = true;
 					console.log(res.response);
 				} else {
-					console.log(res.response);
+					this.$toaster.error(res?.data?.response);
 				}
 				console.log(res);
 			} catch (error) {
-				console.log(error);
+				this.$toaster.error(error?.response?.data?.errors || error?.response?.data?.message);
+				stopLoadings(btn,btnTxt);
 			}
 			stopLoadings(btn, btnTxt);
 		},

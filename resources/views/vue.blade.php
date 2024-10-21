@@ -32,6 +32,7 @@
   <link rel="stylesheet" href="user-assets/assets/css/plugins.min.css">
   <link rel="stylesheet" href="user-assets/assets/css/kaiadmin.min.css"> -->
   <link rel="stylesheet" href="{{asset('assets/css/toastr.min.css')}}" />
+  <link rel="stylesheet" href="{{asset('assets/css/loader.css')}}" />
   <style>
     iframe html body div#rc-anchor-container {
       width: 361px !important;
@@ -86,6 +87,7 @@
   <script src="{{ asset('user-assets/assets/js/core/jquery-3.7.1.min.js') }}"></script>
   <script src="{{ asset('user-assets/assets/js/core/popper.min.js') }}"></script>
   <script src="{{ asset('user-assets/assets/js/core/bootstrap.min.js') }}"></script>
+  
   <!-- jQuery Scrollbar -->
   <script src="{{ asset('user-assets/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
 
@@ -101,15 +103,16 @@
   <script src="{{ asset('user-assets/assets/js/plugin/datatables/datatables.min.js') }}"></script>
 
   <!-- Bootstrap Notify -->
-  <script src="{{ asset('user-assets/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
+  <!-- <script src="{{ asset('user-assets/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js') }}"></script> -->
 
   <!-- jQuery Vector Maps -->
   <script src="{{ asset('user-assets/assets/js/plugin/jsvectormap/jsvectormap.min.js') }}"></script>
   <script src="{{ asset('user-assets/assets/js/plugin/jsvectormap/world.js') }}"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="{{ asset('user-assets/assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
   <!-- Kaiadmin JS -->
   <script src="{{ asset('user-assets/assets/js/kaiadmin.min.js') }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- <script src="{{ asset('user-assets/assets/js/setting-demo.js') }}"></script>
     <script src="{{ asset('user-assets/assets/js/demo.js') }}"></script> -->
   <!-- <script src="{{ asset('vendors/is/is.min.js') }}"></script> -->

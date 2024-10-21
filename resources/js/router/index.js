@@ -8,6 +8,7 @@ import LoginComponent from '../components/frontend/auth/LoginComponent.vue';
 import RegisterComponent from '../components/frontend/auth/RegisterComponent.vue';
 import authLoadingComponent from '../components/frontend/auth/loadingComponent.vue';
 import DashboardComponent from '../components/user/DashboardComponent.vue';
+import profileRoute from './modules/profileRoute';
 //import ExceptionComponent from '../components/exception/ExceptionComponent.vue';
 import store from "../store";
 
@@ -15,7 +16,7 @@ import store from "../store";
 
 
 
-const routes = [
+const baseRoutes = [
     {
         path: '/',
         component: HomeComponent,
@@ -96,14 +97,15 @@ const routes = [
             isFrontend: false,
             auth: true,
         },
+        
     },
-    // {
-    //     path: "/exception",
-    //     name: "route.exception",
-    //     component: ExceptionComponent,
-    // },
-
 ];
+
+const routes = baseRoutes.concat(
+    profileRoute,
+);
+
+//console.log(routes);
 
 const router = createRouter({
     history: createWebHashHistory(),

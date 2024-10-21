@@ -9,6 +9,7 @@ use App\Http\Controllers\{ItemController,EmailValidator};
 // });
 
 Route::apiResource("item",ItemController::class)->middleware('auth:sanctum');
+Route::post("verify-single-email", [EmailValidator::class, "index"])->name("verify.single.email");
 
 
 require __DIR__.'/auth.php';

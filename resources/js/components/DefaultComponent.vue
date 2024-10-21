@@ -1,4 +1,5 @@
 <template>
+
     <div v-if="theme === 'frontend'">
         <main class="main" id="top">
             <div class="content">
@@ -10,18 +11,17 @@
 
     </div>
 
-    <div v-if="theme === 'backend'">
-        <div class="wrapper">
-            <!-- Sidebar -->
-            <SidebarComponent />
-            <!-- End Sidebar -->
-            <div class="main-panel">
-                <HeaderComponent />
-                <router-view></router-view>
-                <UserFooterComponent />
-            </div>
+    <div class="wrapper" v-if="theme === 'backend'">
+        <!-- Sidebar -->
+        <SidebarComponent />
+        <!-- End Sidebar -->
+        <div class="main-panel">
+            <HeaderComponent />
+            <router-view></router-view>
+            <UserFooterComponent />
         </div>
     </div>
+
 
 </template>
 <script>
@@ -29,8 +29,8 @@ import NavComponent from '../components/NavComponent.vue';
 import FooterComponent from '../components/FooterComponent.vue';
 import SidebarComponent from './user/component/SidebarComponent.vue';
 import HeaderComponent from './user/component/HeaderComponent.vue';
-import UserFooterComponent  from './user/component/UserFooterComponent.vue';
-//import VueLoadingComponent from './VueLoadingComponent.vue';
+import UserFooterComponent from './user/component/UserFooterComponent.vue';
+
 
 export default {
     name: "DefaultComponent",
@@ -46,7 +46,6 @@ export default {
         SidebarComponent,
         HeaderComponent,
         UserFooterComponent,
-        //VueLoadingComponent,
 
 
     },
@@ -91,6 +90,17 @@ export default {
                     '../../css/backend/kaiadmin.min.css',
                 ]);
             }
+
+            let loader = this.$loading.show({
+                // container: document.body,
+                canCancel: false,
+                color: '#000',
+                loader: 'bars',
+                backgroundColor: '#fff',
+                opacity: 0.9,
+            });
+
+            setTimeout(() => { loader.hide(); }, 1000);
         },
     },
 }

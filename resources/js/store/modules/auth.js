@@ -46,7 +46,7 @@ export const auth = {
         },
         login: function (context, payload) {
             return new Promise((resolve, reject) => {
-                axios.post('api/login', payload).then((res) => {
+                axios.post('/login', payload).then((res) => {
                     context.commit('authLogin', res.data);
                     resolve(res);
                 }).catch((err) => {
@@ -56,7 +56,7 @@ export const auth = {
         },
         register: function (context, payload) {
             return new Promise((resolve, reject) => {
-                axios.post('api/register', payload).then((res) => {
+                axios.post('/register', payload).then((res) => {
                     context.commit('authLogin', res.data);
                     resolve(res);
                 }).catch((err) => {
@@ -66,7 +66,7 @@ export const auth = {
         },
         authcheck: function (context, payload) {
             return new Promise((resolve, reject) => {
-                axios.post('auth/authcheck', payload).then((res) => {
+                axios.post('/authcheck', payload).then((res) => {
                     if (res.data.status === false){
                         context.commit('authLogout');
                     };
@@ -78,7 +78,7 @@ export const auth = {
         },
         logout: function (context) {
             return new Promise((resolve, reject) => {
-                axios.post('auth/logout').then((res) => {
+                axios.post('/logout').then((res) => {
                     context.commit('authLogout');
                     resolve(res);
                 }).catch((err) => {
@@ -88,7 +88,7 @@ export const auth = {
         },
         forgotPassword: function (context, payload) {
             return new Promise((resolve, reject) => {
-                axios.post('auth/forgot-password', payload).then((res) => {
+                axios.post('/forgot-password', payload).then((res) => {
                     context.commit('email', payload);
                     context.commit('phone', payload);
                     resolve(res);

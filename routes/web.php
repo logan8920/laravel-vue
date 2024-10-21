@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\EmailValidator;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
@@ -14,9 +13,9 @@ Route::get('/', function () {
     return view('vue');
 });
 
-Route::get('/user', function () {
-    return view('user-vue');
-});
+// Route::get('/user', function () {
+//     return view('user-vue');
+// });
 
 Route::get('auth/redirect/{provider}', function ($provider) {
     // echo $provider; die;
@@ -48,7 +47,4 @@ Route::get('auth/callback/{provider}', function ($provider) {
     $token = $user->createToken('API Token')->plainTextToken;
     return redirect("/#/loading?token={$token}")->with("user",$user);
 });
-
-Route::post("verify-single-email", [EmailValidator::class, "index"])->middleware("guest")->name("verify.single.email");
-
 
