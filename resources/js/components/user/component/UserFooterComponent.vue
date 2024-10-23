@@ -2,34 +2,26 @@
     <footer class="footer">
         <div class="container-fluid d-flex justify-content-between">
             <nav class="pull-left">
-                <ul class="nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="http://www.themekita.com">
-                            ThemeKita
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"> Help </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"> Licenses </a>
-                    </li>
-                </ul>
+                <div class="copyright">
+                    {{ currentYear }}, made with <i class="fa fa-heart heart text-danger"></i> by
+                    <a target="_blank" href="https://www.hypervix.com">Hypervix.com</a>
+                </div>
             </nav>
-            <div class="copyright">
-                2024, made with <i class="fa fa-heart heart text-danger"></i> by
-                <a href="http://www.themekita.com">ThemeKita</a>
-            </div>
+
             <div>
-                Distributed by
-                <a target="_blank" href="https://themewagon.com/">ThemeWagon</a>.
+                Copyright &copy; {{ currentYear }} 
+                <a target="_blank" href="https://hypervix.com/">Hypervix.com</a> All Rights Reserved.
             </div>
         </div>
     </footer>
 </template>
 <script>
-export const UserFooterComponent = {
+export default {
     name: 'UserFooterComponent',
-    // Other component properties
+    data(){
+        return {
+            currentYear: (new Date()).getFullYear(),
+        }
+    },
 };
 </script>

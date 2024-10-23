@@ -16,8 +16,10 @@
         "vue": "^3.3.0"
     },
     "dependencies": {
+        "@primevue/themes": "^4.1.1",
         "@unhead/vue": "^1.11.8",
         "jquery": "^3.7.1",
+        "primevue": "^4.1.1",
         "vue-element-loading": "^2.0.2",
         "vue-loading-overlay": "6.0",
         "vue-recaptcha": "^2.0.0",

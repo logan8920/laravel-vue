@@ -134,14 +134,14 @@
                                         <div class="u-text">
                                             <h4>{{ authInfo.name }}</h4>
                                             <p class="text-muted">{{ authInfo.email }}</p>
-                                            <router-link :to="{name:'user.profile'}" class="btn btn-xs btn-secondary btn-sm">View
+                                            <router-link :to="{name:'user.my.profile'}" class="btn btn-xs btn-secondary btn-sm">View
                                                 Profile</router-link>
                                         </div>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="dropdown-divider"></div>
-                                    <router-link class="dropdown-item" :to="{name:'user.profile'}">My Profile</router-link>
+                                    <router-link class="dropdown-item" :to="{name:'user.my.profile'}">My Profile</router-link>
                                     <div class="dropdown-divider"></div>
                                     <router-link class="dropdown-item" :to="{name:'user.settings'}">Account Setting</router-link>
                                     <div class="dropdown-divider"></div>

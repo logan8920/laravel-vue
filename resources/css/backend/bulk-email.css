@@ -1,0 +1,78 @@
+#drop-area {
+    border: 2px dashed #aaa;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ebe9e9;
+    border-radius: 8px;
+    min-height: 3in;
+    flex-direction: column;
+    gap: 10px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.drop-text {
+    font-size: 18px;
+    color: #888;
+}
+
+.drop-icon i {
+    color: #888;
+    font-size: 4.5rem;
+}
+
+.highlight {
+    background-color: #444 !important;
+    border-color: #007bff !important;
+}
+
+.custom-file-label::after {
+    content: 'Browse';
+}
+</style>
+<style>
+/* Styles for the loader */
+.loader {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Loader animation */
+.loader::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 50px;
+    border: 5px solid #fff;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Loader visible when .loading class is applied to the body */
+body.loading .loader {
+    display: flex;
+}
+
+/* Keyframes for the spinning animation */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

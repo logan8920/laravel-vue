@@ -7,12 +7,18 @@ import DefaultComponent from './components/DefaultComponent.vue';
 import {LoadingPlugin} from 'vue-loading-overlay';
 import axios from 'axios';
 import ENV from './config/env';
+import PrimeVue from 'primevue/config';
+import Aura from '@primevue/themes/aura';
 // import 'vue-loading-overlay/dist/css/index.css';
 
 
 const app = createApp(DefaultComponent);
 // app.component('authLoadingComponent', authLoadingComponent);
-
+app.use(PrimeVue, {
+    theme: {
+        preset: Aura
+    }
+});
 //app.component('vue-recaptcha', VueRecaptcha);
 //app.component('example-component', ExampleComponent);
 const API_URL = ENV.API_URL;

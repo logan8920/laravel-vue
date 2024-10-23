@@ -1,11 +1,10 @@
-import DashboardComponent from "../../components/user/DashboardComponent.vue";
-
+import MyProfileComponent from "../../components/user/MyProfileComponent.vue";
 
 export default [
     {
-        path: '/profile',
-        name: "user.profile",
-        component: DashboardComponent,
+        path: '/my-profile',
+        name: "user.my.profile",
+        component: MyProfileComponent,
         meta: {
             isFrontend: false,
             auth: true,
@@ -14,7 +13,7 @@ export default [
     {
         path: '/settings',
         name: "user.settings",
-        component: DashboardComponent,
+        component: MyProfileComponent,
         meta: {
             isFrontend: false,
             auth: true,

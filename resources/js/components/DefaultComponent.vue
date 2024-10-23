@@ -88,6 +88,7 @@ export default {
                     '../../css/backend/bootstrap.min.css',
                     '../../css/backend/plugins.min.css',
                     '../../css/backend/kaiadmin.min.css',
+                    '../../css/backend/bulk-email.css',
                 ]);
             }
 

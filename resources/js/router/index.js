@@ -9,6 +9,8 @@ import RegisterComponent from '../components/frontend/auth/RegisterComponent.vue
 import authLoadingComponent from '../components/frontend/auth/loadingComponent.vue';
 import DashboardComponent from '../components/user/DashboardComponent.vue';
 import profileRoute from './modules/profileRoute';
+import BulkEmail from './modules/BulkEmail';
+import SingleEmail from './modules/SingleEmail';
 //import ExceptionComponent from '../components/exception/ExceptionComponent.vue';
 import store from "../store";
 
@@ -103,6 +105,8 @@ const baseRoutes = [
 
 const routes = baseRoutes.concat(
     profileRoute,
+    BulkEmail,
+    SingleEmail,
 );
 
 //console.log(routes);
