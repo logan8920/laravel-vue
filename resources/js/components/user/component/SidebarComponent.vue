@@ -66,7 +66,7 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <a href="#charts" @click.prevent="logout">
+                        <a href="#" @click.prevent="logout">
                             <i class="far fa-chart-bar"></i>
                             <p>Logout</p>
                         </a>

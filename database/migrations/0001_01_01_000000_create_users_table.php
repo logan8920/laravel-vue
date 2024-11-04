@@ -20,6 +20,12 @@ return new class extends Migration
             $table->string('provider')->nullable();
             $table->string('provider_id',96)->nullable();
             $table->text('avatar')->nullable();
+            $table->string('phone',12)->nullable();
+            $table->string('bio_role')->nullable();
+            $table->mediumText('bio_desc')->nullable();
+            $table->string('twitter')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('instagram')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

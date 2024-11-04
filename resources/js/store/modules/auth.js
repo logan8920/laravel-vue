@@ -37,7 +37,7 @@ export const auth = {
         profile: function (context, payload) {
             return new Promise((resolve, reject) => {
                 axios.get('/profile', payload).then(res => {
-                    context.commit('authInfo', res.data.data);
+                    context.commit('authInfo', res.data);
                     resolve(res);
                 }).catch((err) => {
                     reject(err);

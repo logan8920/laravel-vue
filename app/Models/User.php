@@ -24,6 +24,12 @@ class User extends Authenticatable
         'provider',
         'provider_id',
         'avatar',
+        'phone',
+        'bio_role',
+        'bio_desc',
+        'twitter',
+        'facebook',
+        'instagram',
     ];
 
     /**

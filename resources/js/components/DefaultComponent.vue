@@ -98,7 +98,7 @@ export default {
                 color: '#000',
                 loader: 'bars',
                 backgroundColor: '#fff',
-                opacity: 0.9,
+                opacity: 1,
             });
 
             setTimeout(() => { loader.hide(); }, 1000);
