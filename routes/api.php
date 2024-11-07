@@ -7,6 +7,7 @@ use App\Http\Controllers\{
     EmailValidator,
     PlanController,
     UserPlanController,
+    EmailResponseController
 };
 
 // Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
@@ -19,8 +20,10 @@ Route::post("verify-single-email", [EmailValidator::class, "index"])->name("veri
 Route::middleware(["auth:sanctum"])->group(function () {
     Route::get("plans", [PlanController::class, "index"])->name("plans");
     Route::get("user-plan", [UserPlanController::class, "index"])->name("user.plan");
+    Route::get("user-dashboard-info",[EmailResponseController::class,"user_dashboard_info"])->name("user.dashboard.info");
     //Route::post("user-transaction", [UserTransactionController::class, "index"])->name("user.transaction");
 });
 
+Route::get("public-plans", [PlanController::class, "index"])->name("public.plans");
 
 require __DIR__.'/auth.php';

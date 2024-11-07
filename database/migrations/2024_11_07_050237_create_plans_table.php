@@ -20,6 +20,7 @@ return new class extends Migration
             $table->json('benefits')->nullable();
             $table->enum('status', ['0','1'])->default('1')->comment('1=>active,0=>inactive');
             $table->string('color_code')->nullable();
+            $table->integer('per_day_credits')->nullable();
             $table->timestamps();
         });
     }

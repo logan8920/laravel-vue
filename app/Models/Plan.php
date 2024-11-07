@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Plan extends Model
 {
     protected $fillable = [
-        "name","price","description","type","benefits","status","color_code",
+        "name","price","description","type","benefits","status","color_code","per_day_credits"
     ];
 
     /**

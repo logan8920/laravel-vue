@@ -25,7 +25,7 @@
                                 <div class="col col-stats ms-3 ms-sm-0">
                                     <div class="numbers">
                                         <p class="card-category">Todays Credits</p>
-                                        <h4 class="card-title">0/1,294</h4>
+                                        <h4 class="card-title">{{ boxesData?.todays_credits }}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -53,7 +53,7 @@
                                 <div class="col col-stats ms-3 ms-sm-0">
                                     <div class="numbers">
                                         <p class="card-category">Total Email Verify</p>
-                                        <h4 class="card-title">1303</h4>
+                                        <h4 class="card-title">{{ boxesData?.total_email_verify }}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -81,7 +81,7 @@
                                 <div class="col col-stats ms-3 ms-sm-0">
                                     <div class="numbers">
                                         <p class="card-category">Days Left</p>
-                                        <h4 class="card-title">45</h4>
+                                        <h4 class="card-title">{{ boxesData?.days_left }}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -109,7 +109,7 @@
                                 <div class="col col-stats ms-3 ms-sm-0">
                                     <div class="numbers">
                                         <p class="card-category">Plan Price</p>
-                                        <h4 class="card-title">₹ 576</h4>
+                                        <h4 class="card-title">₹ {{ boxesData?.plan_price }}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -303,6 +303,7 @@
 import Skeleton from 'primevue/skeleton';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+import axios from 'axios';
 
 export default {
     components: {
@@ -322,6 +323,7 @@ export default {
                 { mx_record: 'P1002', status: 'Product 2', email: 'Category 2', s_no: 75 },
             ],
             loading_sk: true,
+            boxesData : {},
         }
     },
     methods: {
@@ -334,12 +336,20 @@ export default {
         },
     },
     mounted() {
-        setTimeout(() => {
-            // this.products = ;
+        axios.get('user-dashboard-info')
+        .then((res)=>{
+
+            this.boxesData = res.data; 
             this.loading_sk = false;
             this.dataFetch = true;
-            // alert(343);
-        }, 5000);
+
+        })
+        .catch((error)=>{
+            console.log(error);
+            this.$toaster.error(error);
+        })
+            
+       
     },
     watch: {
         $route(e) {
