@@ -290,16 +290,16 @@ export default {
             const form = event.target;
             if(!$(form).valid()) return false;
             const btn = form.querySelector("button[type=submit]");
-            const btnTxt = btn.textContent;
+            const btnTxt = btn.innerHTML;
             this.$toaster.setPosition("toast-bottom-center");
             
             try {
                 startLoadings(btn,"Please wait...");
-                this.$store.dispatch("register",event.target).then(res=>{
-                    console.log(res.data.success);
-                    if(res.data.success) {
-                        this.$toaster.success("registration Success");
-                        router.push({name:"user.dashboard"});
+                this.$store.dispatch("profile",event.target).then(res=>{
+                    console.log(res);
+                    if(res.success) {
+                        this.$toaster.success(res.message);
+                        this.editProfile = false;
                     }
                     stopLoadings(btn,btnTxt);
                 })

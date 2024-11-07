@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Traits\ResponseTrait;
 
 class UserProfileController extends Controller
 {
-    use ResponseTrait;
     /**
      * Display a listing of the resource.
      */
@@ -45,10 +43,14 @@ class UserProfileController extends Controller
             $validData = $request->validate([
                 "name" => "required|string",
                 "email"=> "required|email|unique:users,email,{$id},id",
-                "password"=> "nullable|string|max:8",
-                "avatar" => "nullable|file|memes:jpg,jpeg,png,gif|max:6120",
+                "password"=> "nullable|string|min:8",
+                "avatar" => "nullable|file|mimes:jpg,jpeg,png,gif|max:6120",
                 "phone" => "nullable|numeric|digits:10",
-                "bio_role" => "nullable|string",
+                "bio_role" => "nullable|string|max:255",
+                "bio_desc" => "nullable|string",
+                "twitter" => "nullable|url",
+                "facebook"=> "nullable|url",
+                "instagram"=> "nullable|url",
                 
             ]);
             if(empty($validData["password"]))
@@ -56,13 +58,19 @@ class UserProfileController extends Controller
                 unset($validData["password"]);
             }
 
-            if($request->hasFile("avatar")){
-                
+            if ($request->hasFile('avatar')) {
+                $file = $request->file('avatar');
+                $fileContents = file_get_contents($file->getPathname());
+                $base64Image = base64_encode($fileContents);
+                $mimeType = $file->getMimeType();
+                $base64ImageWithPrefix = "data:$mimeType;base64," . $base64Image;
+                $validData['avatar'] = $base64ImageWithPrefix;
             }
+            
             $request->user()->update($validData);
-
+            return $this->sendSuccess('Profile Details updated successfully!', 200,$request->user()->toArray());
         }catch(\Exception $e){
-            return $this->errorResponse($e->getMessage(),$e->getMessage());
+            return $this->sendError($e->getMessage(),$e->getCode());
         }
     }
 

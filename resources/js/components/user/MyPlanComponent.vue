@@ -10,122 +10,68 @@
                         </div>
                         <div class="card-body">
                             <div class="row justify-content-center align-items-center mb-1">
-                                <div class="col-md-3 ps-md-0">
-                                    <div class="card card-pricing">
+                                <div class="col-md-4 ps-md-0 pe-md-0" v-if="dataFetch === false">
+                                    <div class="card card-pricing card-pricing-focus">
                                         <div class="card-header">
-                                            <h4 class="card-title">Basic</h4>
-                                            <div class="card-price">
-                                                <span class="price">$25</span>
-                                                <span class="text">/mo</span>
+                                            <h4 class="card-title d-flex justify-content-center">
+                                                <Skeleton height="1.5rem" width="40%" class="ms-2 mt-1"></Skeleton>
+                                            </h4>
+                                            <div class="card-price d-flex justify-content-center">
+                                                <Skeleton height="2rem" width="20%" class="ms-2 mt-2"></Skeleton>
                                             </div>
                                         </div>
                                         <div class="card-body">
-                                            <ul class="specification-list">
-                                                <li>
-                                                    <span class="name-specification">Customizer</span>
-                                                    <span class="status-specification">14 days trial</span>
+                                            <ul class="pricing-contents">
+                                                <li class="d-flex" style="list-style : none;margin-top: 17px;">
+                                                    <Skeleton shape="circle" size="1.5rem" class="me-3" />
+                                                    <Skeleton width="70%" class="ms-2 mt-1"></Skeleton>
                                                 </li>
-                                                <li>
-                                                    <span class="name-specification">Chat History</span>
-                                                    <span class="status-specification">No</span>
+                                                <li class="d-flex" style="list-style : none;margin-top: 17px;">
+                                                    <Skeleton shape="circle" size="1.5rem" class="me-3" />
+                                                    <Skeleton width="70%" class="ms-2 mt-1"></Skeleton>
                                                 </li>
-                                                <li>
-                                                    <span class="name-specification">Statistics</span>
-                                                    <span class="status-specification">14 days trial</span>
+                                                <li class="d-flex" style="list-style : none;margin-top: 17px;">
+                                                    <Skeleton shape="circle" size="1.5rem" class="me-3" />
+                                                    <Skeleton width="70%" class="ms-2 mt-1"></Skeleton>
                                                 </li>
-                                                <li>
-                                                    <span class="name-specification">Support</span>
-                                                    <span class="status-specification">Yes</span>
+                                                <li class="d-flex" style="list-style : none;margin-top: 17px;">
+                                                    <Skeleton shape="circle" size="1.5rem" class="me-3" />
+                                                    <Skeleton width="70%" class="ms-2 mt-1"></Skeleton>
                                                 </li>
-                                                <li>
-                                                    <span class="name-specification">Live Support</span>
-                                                    <span class="status-specification">No</span>
+                                                <li class="d-flex"
+                                                    style="list-style : none;margin-top: 17px;margin-bottom: 20px;">
+                                                    <Skeleton shape="circle" size="1.5rem" class="me-3" />
+                                                    <Skeleton width="70%" class="ms-2 mt-1"></Skeleton>
                                                 </li>
                                             </ul>
                                         </div>
                                         <div class="card-footer">
-                                            <button class="btn btn-primary w-100">
-                                                <b>Get Started</b>
-                                            </button>
+                                            <a href="#" class="btn btn-border btn-lg w-75 fw-bold mb-3 mt-3">
+                                                <Skeleton width="80%" class="ms-2 mt-1"></Skeleton>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3 ps-md-0 pe-md-0">
-                                    <div class="card card-pricing card-pricing-focus card-primary">
+                                <div class="col-md-4 ps-md-0 pe-md-0" v-else>
+                                    <div class="card card-pricing card-pricing-focus">
                                         <div class="card-header">
-                                            <h4 class="card-title">Professional</h4>
+                                            <h4 class="card-title">{{ myPlan?.name }}</h4>
                                             <div class="card-price">
-                                                <span class="price">$35</span>
-                                                <span class="text">/mo</span>
+                                                <span class="price">₹ {{ myPlan?.price }}</span>
+                                                <span class="text">/{{ myPlan?.type }}</span>
                                             </div>
                                         </div>
-                                        <div class="card-body">
-                                            <ul class="specification-list">
-                                                <li>
-                                                    <span class="name-specification">Customizer</span>
-                                                    <span class="status-specification">Yes</span>
-                                                </li>
-                                                <li>
-                                                    <span class="name-specification">Chat History</span>
-                                                    <span class="status-specification">3 Month</span>
-                                                </li>
-                                                <li>
-                                                    <span class="name-specification">Statistics</span>
-                                                    <span class="status-specification">3 Month</span>
-                                                </li>
-                                                <li>
-                                                    <span class="name-specification">Support</span>
-                                                    <span class="status-specification">Yes</span>
-                                                </li>
-                                                <li>
-                                                    <span class="name-specification">Live Support</span>
-                                                    <span class="status-specification">Yes</span>
+                                        <div class="card-body card-pricing2">
+                                            <ul class="pricing-content">
+                                                <li v-for="(item, index) in (myPlan?.benefits || [])" :key="index"
+                                                    :class="{ disable: item.status === '0' }">
+                                                    {{ item.benefit }}
                                                 </li>
                                             </ul>
                                         </div>
                                         <div class="card-footer">
-                                            <button class="btn btn-light w-100">
-                                                <b>Get Started</b>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 pe-md-0">
-                                    <div class="card card-pricing">
-                                        <div class="card-header">
-                                            <h4 class="card-title">Team</h4>
-                                            <div class="card-price">
-                                                <span class="price">$75</span>
-                                                <span class="text">/mo</span>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <ul class="specification-list">
-                                                <li>
-                                                    <span class="name-specification">Customizer</span>
-                                                    <span class="status-specification">Yes</span>
-                                                </li>
-                                                <li>
-                                                    <span class="name-specification">Chat History</span>
-                                                    <span class="status-specification">1 Year</span>
-                                                </li>
-                                                <li>
-                                                    <span class="name-specification">Statistics</span>
-                                                    <span class="status-specification">1 Year</span>
-                                                </li>
-                                                <li>
-                                                    <span class="name-specification">Support</span>
-                                                    <span class="status-specification">Yes</span>
-                                                </li>
-                                                <li>
-                                                    <span class="name-specification">Live Support</span>
-                                                    <span class="status-specification">Yes</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="card-footer">
-                                            <button class="btn btn-primary w-100">
-                                                <b>Get Started</b>
+                                            <button class="btn btn-light w-100" disabled>
+                                                <b>My Plan</b>
                                             </button>
                                         </div>
                                     </div>
@@ -141,16 +87,30 @@
 
 <script>
 import PageHeaderComponent from './component/PageHeaderComponent.vue';
+import Skeleton from 'primevue/skeleton';
 export default {
     name: "MyPlanComponent",
     components: {
         PageHeaderComponent,
+        Skeleton,
     },
     data() {
         return {
             pageName: "My Plan",
             pageUrl: "user.my.plan",
+            dataFetch: false,
+            myPlan: {},
         }
+    },
+    mounted() {
+        axios.get('/user-plan')
+        .then((res) => {
+            this.myPlan = res.data;
+            this.dataFetch = true;
+        }).catch((error) => {
+            console.log(error);
+            $this.toaster.error(error);
+        });
     }
 }
 </script>

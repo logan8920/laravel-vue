@@ -2,27 +2,24 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
+use App\Http\Controllers\EmailValidator;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
-// Route::get('/', function () {
-//     return ['Laravel' => app()->version()];
-// });
-
-Route::get('/', function () {
-    return view('vue');
+Route::get('/', function(){
+    return view("vue");
 });
 
-// Route::get('/user', function () {
-//     return view('user-vue');
-// });
+Route::get('/laravel-vue1/public', function(){
+    return view("vue");
+});
 
-Route::get('auth/redirect/{provider}', function ($provider) {
+Route::get('/auth/redirect/{provider}', function ($provider) {
     // echo $provider; die;
     return Socialite::driver($provider)->redirect();
 });
 
-Route::get('auth/callback/{provider}', function ($provider) {
+Route::get('/auth/callback/{provider}', function ($provider) {
     $socialUser = Socialite::driver($provider)->stateless()->user();
     $imageData = file_get_contents($socialUser->getAvatar());
 

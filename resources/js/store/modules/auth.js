@@ -36,9 +36,9 @@ export const auth = {
     actions: {
         profile: function (context, payload) {
             return new Promise((resolve, reject) => {
-                axios.get('/profile', payload).then(res => {
-                    context.commit('authInfo', res.data);
-                    resolve(res);
+                axios.post('/profile', payload).then(res => {
+                    context.commit('authInfo', res.data.data);
+                    resolve(res.data);
                 }).catch((err) => {
                     reject(err);
                 });
@@ -48,7 +48,7 @@ export const auth = {
             return new Promise((resolve, reject) => {
                 axios.post('/login', payload).then((res) => {
                     context.commit('authLogin', res.data);
-                    resolve(res);
+                    resolve(res.data);
                 }).catch((err) => {
                     reject(err);
                 });

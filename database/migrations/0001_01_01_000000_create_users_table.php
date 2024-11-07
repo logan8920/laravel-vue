@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->string('provider')->nullable();
             $table->string('provider_id',96)->nullable();
-            $table->text('avatar')->nullable();
+            $table->longText('avatar')->nullable();
             $table->string('phone',12)->nullable();
             $table->string('bio_role')->nullable();
             $table->mediumText('bio_desc')->nullable();

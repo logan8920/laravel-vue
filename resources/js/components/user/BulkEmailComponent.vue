@@ -12,7 +12,7 @@
                             <div class="container my-5">
                                 <div class="row justify-content-center">
                                     <div class="col-lg-8 col-md-10 col-sm-12">
-                                        <div id="drop-area" class="mb-3">
+                                        <div id="drop-area" class="mb-3" @click="fileUpload">
                                             <div class="drop-icon">
                                                 <i class="fa fa-file-upload"></i>
                                             </div>
@@ -74,6 +74,11 @@ export default {
         return {
             pageName: "Bulk Email Validator",
             pageUrl: "user.bulk.email",
+        }
+    },
+    methods: {
+        fileUpload: function(){
+            document.querySelector("input[type=file]").click();
         }
     }
 }
