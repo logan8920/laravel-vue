@@ -8,7 +8,7 @@
                         <div class="card-header">
                             <div class="card-title">{{ pageName }}</div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" v-if="paymentLayout === false">
                             <div class="row justify-content-center align-items-center mb-5" v-if="dataFetch === true">
                                 <div class="col-md-3 ps-md-0">
                                     <div :class="['card-pricing2', `card-${plan1?.color_code}`]">
@@ -31,7 +31,7 @@
                                                 {{ item.benefit }}
                                             </li>
                                         </ul>
-                                        <a href="#" class="btn btn-success btn-border btn-lg w-75 fw-bold mb-3">Purchase</a>
+                                        <a href="#" @click.prevent="handlePurchase(plan1?.id)" class="btn btn-success btn-border btn-lg w-75 fw-bold mb-3">Purchase</a>
                                     </div>
                                 </div>
                                 <div class="col-md-3 ps-md-0 pe-md-0">
@@ -55,7 +55,7 @@
                                                 {{ item.benefit }}
                                             </li>
                                         </ul>
-                                        <a href="#" class="btn btn-success btn-border btn-lg w-75 fw-bold mb-3">Purchase</a>
+                                        <a href="#" @click.prevent="handlePurchase(plan2?.id)" class="btn btn-success btn-border btn-lg w-75 fw-bold mb-3">Purchase</a>
                                     </div>
                                 </div>
                                 <div class="col-md-3 pe-md-0">
@@ -79,7 +79,7 @@
                                                 {{ item.benefit }}
                                             </li>
                                         </ul>
-                                        <a href="#" class="btn btn-success btn-border btn-lg w-75 fw-bold mb-3">Purchase</a>
+                                        <a href="#" @click.prevent="handlePurchase(plan3?.id)" class="btn btn-success btn-border btn-lg w-75 fw-bold mb-3">Purchase</a>
                                     </div>
                                 </div>
                             </div>
@@ -215,6 +215,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="card-body" v-else>
+                            <SelectPaymentGateway :planId="selectedPlanId" @handle-back="handleBackToPlan" :paymentPlanDetail="selectedPlanDetails"></SelectPaymentGateway>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -224,6 +227,7 @@
 
 <script>
 import PageHeaderComponent from './component/PageHeaderComponent.vue';
+import SelectPaymentGateway from './component/SelectPaymentGateway.vue';
 import axios from 'axios';
 import Skeleton from 'primevue/skeleton';
 
@@ -232,6 +236,7 @@ export default {
     components: {
         PageHeaderComponent,
         Skeleton,
+        SelectPaymentGateway,
     },
     data() {
         return {
@@ -241,6 +246,10 @@ export default {
             plan1: {},
             plan2: {},
             plan3: {},
+            paymentLayout: true,
+            selectedPlanId: 0,
+            selectedPlanDetails: {},
+            allPlans: {},
         }
     },
     mounted() {
@@ -249,11 +258,26 @@ export default {
             this.plan1 = res.data[0];
             this.plan2 = res.data[1];
             this.plan3 = res.data[2];
+            res.data.forEach((plan)=>{
+                this.allPlans[plan.id] = plan;
+            });
+            //console.log(this.allPlans);
             this.dataFetch = true;
         }).catch((error) => {
             console.log(error);
-            $this.toaster.error(error);
+            this.$toaster.error(error);
         });
+    },
+    methods: {
+        handlePurchase: function(planId) {
+            this.selectedPlanId = planId;
+            this.selectedPlanDetails = this.allPlans[planId];
+            this.paymentLayout = true;
+        },
+        handleBackToPlan: function(value){
+            this.paymentLayout = value;
+            this.selectedPlanId = 0;
+        }
     }
 }
 </script>

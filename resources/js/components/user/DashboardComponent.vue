@@ -8,8 +8,8 @@
                     <h6 class="op-7 mb-2">User activity and subscription details here:</h6>
                 </div>
                 <div class="ms-md-auto py-2 py-md-0">
-                    <a href="#" class="btn btn-label-info btn-round me-2">Your Plan</a>
-                    <a href="#" class="btn btn-primary btn-round">View Plans</a>
+                    <router-link :to="{name: 'user.my.plan'}" class="btn btn-label-info btn-round me-2">Your Plan</router-link>
+                    <router-link :to="{name: 'user.view.plan'}" class="btn btn-primary btn-round">View Plans</router-link>
                 </div>
             </div>
             <div class="row">
@@ -149,21 +149,6 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <!-- <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>S.no</th>
-                                        <th>Email</th>
-                                        <th>Status</th>
-                                        <th>Mx Record</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td colspan="4" align="center">No Record Found.</td>
-                                    </tr>
-                                </tbody>
-                            </table> -->
                             <DataTable :value="products">
                                 <Column field="s_no" header="S.no">
                                     <template #body="slotProps">
@@ -214,29 +199,32 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-category">On March 25, 2024</div>
+                            <div class="card-category">On {{ currentDate }}</div>
                         </div>
                         <div class="card-body pb-0 mb-4">
                             <div class="card shadow-sm mt-2 mb-2 w-100">
                                 <div class="card-header bg-info text-white rounded">
-                                    <h5 class="mb-0 text-white">Test@gmail.com</h5>
+                                    <h5 class="mb-0 text-white">{{ singleData?.email ?? '-' }}</h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="row mb-3">
                                         <div class="col-md-5"><strong>Username:</strong></div>
-                                        <div class="col-md-7">Test</div>
+                                        <div class="col-md-7">{{ singleData?.user ?? '-' }}</div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-5"><strong>Status:</strong></div>
-                                        <div class="col-md-7"><span class="badge bg-success">Test</span></div>
+                                        <div class="col-md-7"><span class="badge bg-success">{{ singleData?.status
+                                                }}</span></div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-5"><strong>MX Record:</strong></div>
-                                        <div class="col-md-7">smpt.google.com</div>
+                                        <div class="col-md-7">{{ singleData?.mx_record ?? '-' }}</div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-5"><strong>Free Domain:</strong></div>
-                                        <div class="col-md-7"><span class="badge bg-primary">Yes</span></div>
+                                        <div class="col-md-7"><span class="badge bg-primary">{{ singleData?.free_email
+                                                ?? '-' }}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -269,24 +257,34 @@
                         <div class="card-body pb-0 mb-4">
                             <div class="card shadow-sm mt-2 mb-2 w-100">
                                 <div class="card-header bg-info text-white rounded">
-                                    <h5 class="mb-0 text-white"><Skeleton width="60%" class="ms-2 mt-1"></Skeleton></h5>
+                                    <h5 class="mb-0 text-white">
+                                        <Skeleton width="60%" class="ms-2 mt-1"></Skeleton>
+                                    </h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="row mb-3">
                                         <div class="col-md-5"><strong>Username:</strong></div>
-                                        <div class="col-md-7"><Skeleton width="60%" class="ms-2 mt-1"></Skeleton></div>
+                                        <div class="col-md-7">
+                                            <Skeleton width="60%" class="ms-2 mt-1"></Skeleton>
+                                        </div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-5"><strong>Status:</strong></div>
-                                        <div class="col-md-7"><Skeleton width="30%" class="ms-2 mt-1"></Skeleton></div>
+                                        <div class="col-md-7">
+                                            <Skeleton width="30%" class="ms-2 mt-1"></Skeleton>
+                                        </div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-5"><strong>MX Record:</strong></div>
-                                        <div class="col-md-7"><Skeleton width="60%" class="ms-2 mt-1"></Skeleton></div>
+                                        <div class="col-md-7">
+                                            <Skeleton width="60%" class="ms-2 mt-1"></Skeleton>
+                                        </div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-5"><strong>Free Domain:</strong></div>
-                                        <div class="col-md-7"><Skeleton width="30%" class="ms-2 mt-1"></Skeleton></div>
+                                        <div class="col-md-7">
+                                            <Skeleton width="30%" class="ms-2 mt-1"></Skeleton>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -322,8 +320,10 @@ export default {
                 { mx_record: 'P1001', status: 'Product 1', email: 'Category 1', s_no: 50 },
                 { mx_record: 'P1002', status: 'Product 2', email: 'Category 2', s_no: 75 },
             ],
+            singleData: false,
             loading_sk: true,
-            boxesData : {},
+            boxesData: {},
+            currentDate: false,
         }
     },
     methods: {
@@ -336,10 +336,29 @@ export default {
         },
     },
     mounted() {
+        const monthArray = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+        ];
+
+        const date = new Date();
+        this.currentDate = `${monthArray[date.getMonth()]} ${date.getDate().toString().padStart(2, '0')}, ${date.getFullYear()}`;
         axios.get('user-dashboard-info')
         .then((res)=>{
 
             this.boxesData = res.data; 
+            this.products = res.data.bulk_email_data;
+            this.singleData = res.data.single_data;
             this.loading_sk = false;
             this.dataFetch = true;
 

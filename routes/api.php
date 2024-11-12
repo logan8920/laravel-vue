@@ -7,7 +7,8 @@ use App\Http\Controllers\{
     EmailValidator,
     PlanController,
     UserPlanController,
-    EmailResponseController
+    EmailResponseController,
+    PaymentController,
 };
 
 // Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
@@ -21,6 +22,7 @@ Route::middleware(["auth:sanctum"])->group(function () {
     Route::get("plans", [PlanController::class, "index"])->name("plans");
     Route::get("user-plan", [UserPlanController::class, "index"])->name("user.plan");
     Route::get("user-dashboard-info",[EmailResponseController::class,"user_dashboard_info"])->name("user.dashboard.info");
+    Route::post("initiate-payment", [PaymentController::class,"initial_payment"])->name("initiate.payment");
     //Route::post("user-transaction", [UserTransactionController::class, "index"])->name("user.transaction");
 });
 
