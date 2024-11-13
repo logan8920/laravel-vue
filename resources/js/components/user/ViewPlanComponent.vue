@@ -246,7 +246,7 @@ export default {
             plan1: {},
             plan2: {},
             plan3: {},
-            paymentLayout: true,
+            paymentLayout: false,
             selectedPlanId: 0,
             selectedPlanDetails: {},
             allPlans: {},

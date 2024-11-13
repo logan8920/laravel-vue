@@ -132,13 +132,16 @@ export default {
                 card.classList.remove('checkbox');
             }
         },
-        handlePayment: function(){
+        handlePayment: function(event){
             this.$toaster.setPosition("toast-bottom-center");
-            const paymentMode = document.querySelector("[name=payment_mode]");
-            if(!paymentMode.checked) {
+            const paymentMode = document.querySelector("input[name=payment_mode]:checked");
+            const btn = event.target;
+            const btnText = btn.innerHTML;
+            if(!paymentMode) {
                 this.$toaster.error("Please Choose the method of payment!");
                 return false;
             }
+            this.$btnLoader.startLoading(btn);
             const data = new FormData();
             data.append("plan_id",btoa(this.planId));
             data.append("payment_mode",paymentMode.value);
@@ -146,9 +149,11 @@ export default {
             .then((res)=>{
                 console.log(res.data);
                 this.$toaster.success("Payment Successfull!");
+                this.$btnLoader.stopLoading(btn,btnText);
             })
             .catch((error)=>{
                 this.$toaster.error(error?.response?.data?.errors || error?.response?.data?.message);
+                this.$btnLoader.stopLoading(btn,btnText);
             })
         }
 

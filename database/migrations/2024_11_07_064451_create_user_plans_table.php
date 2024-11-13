@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('plan_id')->constrained('plans')->cascadeOnDelete();
+            $table->tinyInteger('plan_type')->nullable()->comment('0=>upcomming,1=>current,2=>expired');
             $table->date('valid_form')->nullable();
             $table->date('valid_to')->nullable();
             $table->timestamps();

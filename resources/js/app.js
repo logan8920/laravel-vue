@@ -3,6 +3,7 @@ import { createApp } from 'vue';
 import router from './router';
 import store from './store';
 import toaster from './services/alert';
+import btnLoader from './services/btnLoader';
 import DefaultComponent from './components/DefaultComponent.vue';
 import {LoadingPlugin} from 'vue-loading-overlay';
 import axios from 'axios';
@@ -44,6 +45,8 @@ axios.interceptors.request.use(
 
 
 app.config.globalProperties.$toaster = toaster;
+app.config.globalProperties.$btnLoader = btnLoader;
+
 
 app.use(router)
 app.use(store);

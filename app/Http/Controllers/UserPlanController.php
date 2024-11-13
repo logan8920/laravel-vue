@@ -16,6 +16,7 @@ class UserPlanController extends Controller
         $user_id = $request->user()->id;
         $plan = UserPlan::whereUserId($user_id)
             ->where("valid_to", ">=", date("Y-m-d"))
+            ->where("plan_type",1)
             ->first();
 
         return $plan ? $plan->plan->toArray() : [];

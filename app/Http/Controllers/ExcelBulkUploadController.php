@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Artisan;
 use App\Imports\EmailUploadExcel;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Models\{Email,batch_process_id,EmailResponse,RetryInvalidEmails};
+use App\Models\{BatchProcessId,EmailResponse,RetryInvalidEmails};
 use App\Jobs\{EmailBatchValidator,MultiCurlsHandler,CoreEamilValidate};
 use DB;
 use App\Jobs\RetryInvalidEmails as RetryInvalidEmail;
@@ -20,7 +20,7 @@ class ExcelBulkUploadController extends Controller
 
     public function index()
     {
-        $batch_ids = batch_process_id::orderBy('id','desc')->get();
+        $batch_ids = BatchProcessId::orderBy('id','desc')->get();
         return view('welcome',compact('batch_ids'));
     }
     /**
@@ -48,7 +48,7 @@ class ExcelBulkUploadController extends Controller
             $fileName = $request->file('excel')->getClientOriginalName();
             $data = Excel::toArray(new EmailUploadExcel, $request->file('excel'));
             $heading = array_shift($data[0]);
-            $batchId = batch_process_id::create([
+            $batchId = BatchProcessId::create([
                 'file_name' => $fileName,
                 'job_completed' => 0,
                 'created_at' => date('Y-m-d H:i:s'),
@@ -111,13 +111,13 @@ class ExcelBulkUploadController extends Controller
     }
 
 
-    public function downloadBatch(batch_process_id $batch)
+    public function downloadBatch(BatchProcessId $batch)
     {
         return Excel::download(new BatchResponses($batch), 'batch'.$batch->id.'.'.(rand(1111,99999)).'.xlsx');
     }
 
 
-    public function updateProgress(batch_process_id $batch)
+    public function updateProgress(BatchProcessId $batch)
     {
         try {
            $widths = round(($batch->job_completed / $batch->total_jobs) * 100);
@@ -142,7 +142,7 @@ class ExcelBulkUploadController extends Controller
         }
     }
 
-    public function updateStatus(batch_process_id $batch)
+    public function updateStatus(BatchProcessId $batch)
     {
         try {
            $batch->update(['status'=>1]);
@@ -176,7 +176,7 @@ class ExcelBulkUploadController extends Controller
 
         try {
 
-            $batch_process_id = batch_process_id::create([
+            $batch_process_id = BatchProcessId::create([
                 'file_name' => $fileName,
                 'job_completed' => 0,
                 'created_at' => date('Y-m-d H:i:s'),
@@ -199,7 +199,7 @@ class ExcelBulkUploadController extends Controller
      * @param $job
      * @return JSON
      **/
-    public function job_stop(batch_process_id $job)
+    public function job_stop(BatchProcessId $job)
     {
         try {
 
@@ -329,7 +329,7 @@ class ExcelBulkUploadController extends Controller
             $fileName = $request->file('excel')->getClientOriginalName();
             $data = Excel::toArray(new EmailUploadExcel, $request->file('excel'));
             $heading = array_shift($data[0]);
-            $batchId = batch_process_id::create([
+            $batchId = BatchProcessId::create([
                 'file_name' => $fileName,
                 'job_completed' => 0,
                 'created_at' => date('Y-m-d H:i:s'),
@@ -412,7 +412,7 @@ class ExcelBulkUploadController extends Controller
             $fileName = $request->file('excel')->getClientOriginalName();
             $data = Excel::toArray(new EmailUploadExcel, $request->file('excel'));
             $heading = array_shift($data[0]);
-            $batchId = batch_process_id::create([
+            $batchId = BatchProcessId::create([
                 'file_name' => $fileName,
                 'job_completed' => 0,
                 'created_at' => date('Y-m-d H:i:s'),

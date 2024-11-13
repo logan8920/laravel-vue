@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 use App\Services\Paytm\PaytmPayment;
 use App\Services\PhonePe\PhonePayment;
 use App\Services\RazorPay\RazorPayPayment;
-use App\Models\{Plan,UserTransaction};
+use App\Models\{Plan,UserTranscation,UserPlan};
 use Exception;
 use Response;
+use DB;
 
 class PaymentController extends Controller
 {
@@ -17,11 +18,13 @@ class PaymentController extends Controller
      */
     public function initial_payment(Request $request)
     {
-        $planId = $request->plan_id;
+        $planId = base64_decode($request->plan_id);
         $mode = $request->payment_mode;
         $user_id = $request->user()->id;
         try {
-            $planDetails = Plan::where("id", base64_decode($planId))->first();
+
+            DB::beginTransaction();
+            $planDetails = Plan::where("id", $planId)->first();
             if (empty($planDetails)) {
                 throw new Exception("Plan Details Not Found!", 404);
             }
@@ -30,7 +33,7 @@ class PaymentController extends Controller
             $cust_id = "CUST_{$random}_$user_id";
             $order_id = "ORDER_ID_{$random}";
 
-            $transaction = UserTransaction::create([
+            $transaction = UserTranscation::create([
                 "user_id" => $request->user()->id,
                 "payment_mode" => $mode,
                 "plan_id" => $planId,
@@ -76,9 +79,25 @@ class PaymentController extends Controller
                 "response_received" => json_encode($response)
             ]);
 
-            return $this->sendSuccess("Payment Completed!!",200);
+            $check_any_active_plan = $request->user()->plans()->where("plan_type",1)->count();
+            $plan_type = 1;
+            if($check_any_active_plan) {
+                $plan_type = 0;
+            }
+
+            $days = $this->days_in[$planDetails->type];
+
+            $planDetails = $request->user()->plans()->create([
+                "plan_id"=>$planId,
+                "plan_type"=>$plan_type,
+                "valid_form"=>date("Y-m-d"),
+                "valid_to" => (new \DateTime())->modify("+$days days")->format("Y-m-d"),
+            ]);
+            DB::commit();
+            return $this->sendSuccess("Payment Completed!!",200,$planDetails->toArray());
 
         } catch (Exception $e) {
+            DB::rollBack();
             $this->sendError($e->getMessage(), $e->getCode());
         }
 
